@@ -4,7 +4,7 @@
 #' @importFrom plotly layout
 #' @importFrom plotly add_trace
 #' @importFrom stats predict
-#'
+#' @export
 regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
 
   outcome_name <- as.character(model$terms)[[2]]
