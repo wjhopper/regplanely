@@ -1,2 +1,4 @@
+^renv$
+^renv\.lock$
 ^regplanely\.Rproj$
 ^\.Rproj\.user$
