@@ -1,0 +1,15 @@
+Package: regplanely
+Title: Interactive Visualizations of Multiple Regression Models
+Version: 0.0.0.9000
+Authors@R: 
+    person("Will", "Hopper", , "whopper@smith.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-7848-1946"))
+Description: The regplanely package allows you to create an interactive visualization
+    of a regression model's predictions using just a fitted model object. The visualization
+    is created using the [plotly](https://cran.r-project.org/web/packages/plotly/index.html)
+    library.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0
