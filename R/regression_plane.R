@@ -1,10 +1,27 @@
+#' Visualize a multiple regression model's predictions as a 3D plane
+#'
+#' @param model A fitted model object, e.g., the output from the lm() function.
+#' @param n_points Integer, the number of steps from minimum to maximum value for which predicted values are generated from the model
+#' @param mesh Logical, controls whether the regression plane has a mesh grid overlain on it
+#' @param mesh_step step size for generating mesh grid lines
+#'
+#'
 #' @importFrom magrittr %>%
 #' @importFrom plotly plot_ly
 #' @importFrom plotly add_markers
 #' @importFrom plotly layout
 #' @importFrom plotly add_trace
 #' @importFrom stats predict
+#'
+#' @return a plotly plot object
+#'
 #' @export
+#'
+#' @examples
+#' m <- lm(mpg ~ wt + qsec, data = mtcars)
+#' regression_plane(m)
+#'
+
 regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
 
   outcome_name <- as.character(model$terms)[[2]]
