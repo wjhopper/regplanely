@@ -24,7 +24,7 @@
 
 regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
 
-  outcome_name <- as.character(model$terms)[[2]]
+  outcome_name <- as.character(model$terms[[2]])
   terms <- attr(attr(model$model, "terms"), "term.labels")
 
   if (length(terms) < 2) {
