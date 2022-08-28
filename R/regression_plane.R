@@ -53,8 +53,12 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
                         )
            )
 
-  x <- seq(min(data[[real_vars[1]]]),  max(data[[real_vars[1]]]), length = n_points)
-  y <- seq(min(data[[real_vars[2]]]),  max(data[[real_vars[2]]]), length = n_points)
+  x_range <- range(data[[real_vars[1]]])
+  y_range <- range(data[[real_vars[2]]])
+
+  x <- seq(x_range[1], x_range[2], length = n_points)
+  y <- seq(y_range[1], y_range[2], length = n_points)
+
   predictor.grid <- expand.grid(x, y)
   colnames(predictor.grid) <- real_vars
 
@@ -64,8 +68,8 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
   p <- plotly::add_surface(p, x= ~x, y=~y, z=~z_hat, showlegend=FALSE, hoverinfo='none', showscale = FALSE, hoverinfo='none')
 
   if (mesh) {
-    x2 <- seq(min(data[[real_vars[1]]]),  max(data[[real_vars[1]]]), by=mesh_step)
-    y2 <- seq(min(data[[real_vars[2]]]),  max(data[[real_vars[2]]]), by=mesh_step)
+    x2 <- seq(x_range[1], x_range[2], by=mesh_step)
+    y2 <- seq(y_range[1], y_range[2], by=mesh_step)
 
     predictor.grid2 <- expand.grid(x2, y2)
     colnames(predictor.grid2) <- real_vars
