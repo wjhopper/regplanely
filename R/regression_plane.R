@@ -24,6 +24,10 @@
 
 regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
 
+  if (any(attr(model$terms, "dataClasses") != "numeric")) {
+    stop("Only models with numeric variables are supported.")
+  }
+
   outcome_name <- as.character(model$terms[[2]])
   terms <- attr(attr(model$model, "terms"), "term.labels")
   real_vars <- terms[!grepl(":", terms) &

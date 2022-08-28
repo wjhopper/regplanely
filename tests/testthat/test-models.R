@@ -21,6 +21,7 @@ test_that("categorical explanatory variables don't work", {
   data("mtcars")
   mtcars$am <- factor(mtcars$am)
   m <- lm(mpg ~ wt * am, data = mtcars)
-  testthat::expect_error(regression_plane(m))
+  testthat::expect_error(regression_plane(m),
+                         "Only models with numeric variables are supported.")
 })
 
