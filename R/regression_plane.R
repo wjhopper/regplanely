@@ -26,30 +26,33 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
 
   outcome_name <- as.character(model$terms[[2]])
   terms <- attr(attr(model$model, "terms"), "term.labels")
+  real_vars <- terms[!grepl(":", terms) &
+                       !grepl("^I\\(.*\\^[[:digit:]]+\\)$", terms)
+                     ]
 
-  if (length(terms) < 2) {
+  if (length(real_vars) != 2) {
     stop("Only models with two explanatory variables should be visualized using a plane.")
   }
 
   data <- model$model
 
-  p <- plotly::plot_ly(x = data[[terms[1]]],
-               y = data[[terms[2]]],
+  p <- plotly::plot_ly(x = data[[real_vars[1]]],
+               y = data[[real_vars[2]]],
                z = data[[outcome_name]],
                opacity = 0.6
                ) %>%
     plotly::add_markers(marker = list(size=3), showlegend=FALSE, hoverinfo='none') %>%
     plotly::layout(scene = list(camera = list(eye = list(x = -1.25, y = -1.25, z = 1.25)),
-                        xaxis = list(title = terms[1]),
-                        yaxis = list(title = terms[2]),
+                        xaxis = list(title = real_vars[1]),
+                        yaxis = list(title = real_vars[2]),
                         zaxis = list(title = outcome_name)
                         )
            )
 
-  x <- seq(min(data[[terms[1]]]),  max(data[[terms[1]]]), length = n_points)
-  y <- seq(min(data[[terms[2]]]),  max(data[[terms[2]]]), length = n_points)
+  x <- seq(min(data[[real_vars[1]]]),  max(data[[real_vars[1]]]), length = n_points)
+  y <- seq(min(data[[real_vars[2]]]),  max(data[[real_vars[2]]]), length = n_points)
   predictor.grid <- expand.grid(x, y)
-  colnames(predictor.grid) <- terms[!grepl(":", terms)]
+  colnames(predictor.grid) <- real_vars
 
   z_hat <- stats::predict(model, newdata = predictor.grid)
   z_hat <- matrix(z_hat, nrow=n_points, byrow = TRUE)
@@ -57,11 +60,11 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
   p <- plotly::add_surface(p, x= ~x, y=~y, z=~z_hat, showlegend=FALSE, hoverinfo='none', showscale = FALSE, hoverinfo='none')
 
   if (mesh) {
-    x2 <- seq(min(data[[terms[1]]]),  max(data[[terms[1]]]), by=mesh_step)
-    y2 <- seq(min(data[[terms[2]]]),  max(data[[terms[2]]]), by=mesh_step)
+    x2 <- seq(min(data[[real_vars[1]]]),  max(data[[real_vars[1]]]), by=mesh_step)
+    y2 <- seq(min(data[[real_vars[2]]]),  max(data[[real_vars[2]]]), by=mesh_step)
 
     predictor.grid2 <- expand.grid(x2, y2)
-    colnames(predictor.grid2) <- terms[!grepl(":", terms)]
+    colnames(predictor.grid2) <- real_vars
 
     z_hat2 <- predict(model, newdata = predictor.grid2)
     z_hat2 <- matrix(z_hat2, nrow=length(y2), byrow = TRUE)
