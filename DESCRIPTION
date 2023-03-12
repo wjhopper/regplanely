@@ -1,6 +1,6 @@
 Package: regplanely
 Title: Interactive Visualizations of Multiple Regression Models
-Version: 0.0.0.9003
+Version: 0.0.1
 Authors@R: 
     person("Will", "Hopper", , "whopper@smith.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7848-1946")
@@ -12,9 +12,10 @@ Description: The regplanely package allows you to create an interactive visualiz
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.3
+Depends:
+  R (>= 4.1.0)
 Imports: 
-    magrittr,
     plotly,
     stats,
     RColorBrewer

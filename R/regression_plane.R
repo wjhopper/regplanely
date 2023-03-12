@@ -6,7 +6,6 @@
 #' @param mesh_step step size for generating mesh grid lines
 #'
 #'
-#' @importFrom magrittr %>%
 #' @importFrom plotly plot_ly
 #' @importFrom plotly add_markers
 #' @importFrom plotly layout
@@ -59,8 +58,8 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
                        color = if (is.null(cat_var)) NULL else { data[[cat_var]] },
                        colors = if (is.null(cat_var)) NULL else { color_pallete },
                        opacity = 0.6
-                       ) %>%
-    plotly::add_markers(marker = list(size=3), hoverinfo='none') %>%
+                       ) |>
+    plotly::add_markers(marker = list(size=3), hoverinfo='none') |>
     plotly::layout(scene = list(camera = list(eye = list(x = -1.25, y = -1.25, z = 1.25)),
                         xaxis = list(title = numeric_vars[1]),
                         yaxis = list(title = numeric_vars[2]),
@@ -130,7 +129,7 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
       z_hat2 <- matrix(predictor.grid$z, nrow=length(y2), byrow = TRUE)
 
       for (i in 1:ncol(z_hat2)) {
-        p <- p %>% plotly::add_trace(type="scatter3d", x=x2[i], y=y2, z=z_hat2[,i],
+        p <- p |> plotly::add_trace(type="scatter3d", x=x2[i], y=y2, z=z_hat2[,i],
                                      color = NULL,
                                      mode="lines", line = list(color = "black"),
                                      showlegend=FALSE
@@ -138,7 +137,7 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
       }
 
       for (j in 1:nrow(z_hat2)){
-        p <- p %>% add_trace(type="scatter3d", x=x2, y=y2[j], z=z_hat2[j,],
+        p <- p |> add_trace(type="scatter3d", x=x2, y=y2[j], z=z_hat2[j,],
                              color = NULL,
                              mode="lines", line = list(color = "black"),
                              showlegend=FALSE
@@ -154,7 +153,7 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
                          )
 
         for (i in 1:ncol(z_hat2)) {
-          p <- p %>% plotly::add_trace(type="scatter3d", x=x2[i], y=y2, z=z_hat2[,i],
+          p <- p |> plotly::add_trace(type="scatter3d", x=x2[i], y=y2, z=z_hat2[,i],
                                        color = NULL,
                                        mode="lines", line = list(color = "black"),
                                        showlegend=FALSE
@@ -162,7 +161,7 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
         }
 
         for (j in 1:nrow(z_hat2)){
-          p <- p %>% add_trace(type="scatter3d", x=x2, y=y2[j], z=z_hat2[j,],
+          p <- p |> add_trace(type="scatter3d", x=x2, y=y2[j], z=z_hat2[j,],
                                color = NULL,
                                mode="lines", line = list(color = "black"),
                                showlegend=FALSE
