@@ -31,6 +31,15 @@ test_that("logical variables work", {
   testthat::expect_s3_class(regression_plane(m), "plotly")
 })
 
+test_that("Multiple mesh_steps work", {
+  data("mtcars")
+  mtcars$am <- as.logical(mtcars$am)
+  m <- lm(mpg ~ wt * cyl * am, data = mtcars)
+  testthat::expect_s3_class(regression_plane(m, mesh = TRUE, mesh_step = c(2, 1)),
+                            "plotly"
+                            )
+})
+
 test_that("more than 2 numeric variables fails", {
   data("mtcars")
   m <- lm(mpg ~ wt + cyl + hp, data = mtcars)

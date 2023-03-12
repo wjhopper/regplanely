@@ -22,7 +22,15 @@
 #' regression_plane(m)
 #'
 
-regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
+regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=c(x=1, y=1)) {
+
+  if (!is.numeric(mesh_step) && is.atomic(mesh_step)) {
+    stop("mesh_step must be a numeric vector with two elements.")
+  }
+
+  if (is.null(names(mesh_step))) {
+    names(mesh_step) <- c("x", "y")
+  }
 
   data <- model$model
 
@@ -109,8 +117,8 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
 
 
   if (mesh) {
-    x2 <- seq(x_range[1], x_range[2], by=mesh_step)
-    y2 <- seq(y_range[1], y_range[2], by=mesh_step)
+    x2 <- seq(x_range[1], x_range[2], by=mesh_step["x"])
+    y2 <- seq(y_range[1], y_range[2], by=mesh_step["y"])
 
     if (is.null(cat_var)) {
       predictor.grid <- expand.grid(x2, y2)
@@ -177,6 +185,3 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
   return(p)
 
 }
-
-
-
