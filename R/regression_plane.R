@@ -100,7 +100,7 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=1) {
                       )
 
       p <- plotly::add_surface(p, x = x, y= y, z = z_hat,
-                               colorscale = list(c(0,1), c(color_pallete[cat], color_pallete[cat])),
+                               colorscale = list(c(0,1), c(color_pallete[as.character(cat)], color_pallete[as.character(cat)])),
                                showlegend = FALSE, hoverinfo = 'none', showscale = FALSE
                                )
     }

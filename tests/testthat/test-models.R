@@ -24,6 +24,13 @@ test_that("categorical variables work", {
   testthat::expect_s3_class(regression_plane(m), "plotly")
 })
 
+test_that("logical variables work", {
+  data("mtcars")
+  mtcars$am <- as.logical(mtcars$am)
+  m <- lm(mpg ~ wt * cyl * am, data = mtcars)
+  testthat::expect_s3_class(regression_plane(m), "plotly")
+})
+
 test_that("more than 2 numeric variables fails", {
   data("mtcars")
   m <- lm(mpg ~ wt + cyl + hp, data = mtcars)
