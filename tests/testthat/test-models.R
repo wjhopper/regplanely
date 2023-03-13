@@ -17,16 +17,23 @@ test_that("polynomial models work", {
   testthat::expect_s3_class(regression_plane(m), "plotly")
 })
 
-test_that("categorical variables work", {
+test_that("categorical factor variables work", {
   data("mtcars")
   mtcars$am <- factor(mtcars$am)
   m <- lm(mpg ~ wt * cyl * am, data = mtcars)
   testthat::expect_s3_class(regression_plane(m), "plotly")
 })
 
-test_that("logical variables work", {
+test_that("categorical logical variables work", {
   data("mtcars")
   mtcars$am <- as.logical(mtcars$am)
+  m <- lm(mpg ~ wt * cyl * am, data = mtcars)
+  testthat::expect_s3_class(regression_plane(m), "plotly")
+})
+
+test_that("categorical character variables work", {
+  data("mtcars")
+  mtcars$am <- as.character(mtcars$am)
   m <- lm(mpg ~ wt * cyl * am, data = mtcars)
   testthat::expect_s3_class(regression_plane(m), "plotly")
 })
