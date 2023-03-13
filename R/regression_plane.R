@@ -50,10 +50,14 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=c(x=1,
   }
 
   if (!is.null(cat_var)) {
-  cat_levels <- unique(data[[cat_var]])
 
-  color_pallete <- suppressWarnings(RColorBrewer::brewer.pal(length(cat_var), "Set2"))
-  names(color_pallete) <- cat_levels
+    cat_levels <- unique(data[[cat_var]])
+
+    color_pallete <- suppressWarnings(RColorBrewer::brewer.pal(length(cat_var), "Set2"))
+    names(color_pallete) <- cat_levels
+
+    legend_title <- paste0("<b>", cat_var, "</b>")
+
   }
 
   if (length(numeric_vars) != 2) {
@@ -69,11 +73,14 @@ regression_plane <- function(model, n_points = 100, mesh=FALSE, mesh_step=c(x=1,
                        ) |>
     plotly::add_markers(marker = list(size=3), hoverinfo='none') |>
     plotly::layout(scene = list(camera = list(eye = list(x = -1.25, y = -1.25, z = 1.25)),
-                        xaxis = list(title = numeric_vars[1]),
-                        yaxis = list(title = numeric_vars[2]),
-                        zaxis = list(title = outcome_name)
-                        )
-           )
+                                xaxis = list(title = numeric_vars[1]),
+                                yaxis = list(title = numeric_vars[2]),
+                                zaxis = list(title = outcome_name)
+                                ),
+                   legend = list(title = list(text = if (is.null(cat_var)) NULL else { legend_title }
+                                              )
+                                 )
+                   )
 
   x_range <- range(data[[numeric_vars[1]]])
   y_range <- range(data[[numeric_vars[2]]])
